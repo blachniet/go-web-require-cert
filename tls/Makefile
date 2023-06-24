@@ -20,7 +20,7 @@ user1.csr: user1.key user1.pin
 	openssl req -new -key user1.key -passin file:user1.pin -out user1.csr -subj '/CN=user1' -sha256
 
 user1.pem: user1.csr ca.pem ca-key.pem
-	openssl x509 -req -days 3650 -in user1.csr -CA ca.pem -CAkey ca-key.pem  -set_serial 1 -out user1.pem -sha256
+	openssl x509 -req -days 3650 -in user1.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out user1.pem -sha256
 
 user1.p12: user1.key user1.pin user1.pem
 	openssl pkcs12 -export -out user1.p12 -inkey user1.key -passin file:user1.pin -in user1.pem -passout pass:password1234
