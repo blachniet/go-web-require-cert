@@ -3,9 +3,11 @@ package main
 import (
 	"crypto/tls"
 	"crypto/x509"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strings"
 )
 
 func main() {
@@ -30,7 +32,16 @@ func main() {
 	}
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello World"))
+		if len(r.TLS.PeerCertificates) > 0 {
+			cns := make([]string, len(r.TLS.PeerCertificates))
+			for i, cert := range r.TLS.PeerCertificates {
+				cns[i] = cert.Subject.CommonName
+			}
+
+			w.Write([]byte(fmt.Sprintf("Hello, %v!", strings.Join(cns, ", "))))
+		} else {
+			w.Write([]byte("Hello, world!"))
+		}
 	})
 
 	log.Println("listen and server on", srv.Addr)
