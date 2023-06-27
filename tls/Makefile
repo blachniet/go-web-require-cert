@@ -12,16 +12,16 @@ $(SERVER_FILES): server-csr.json $(CA_FILES)
 	cfssl gencert -ca ca.pem -ca-key ca-key.pem server-csr.json | cfssljson -bare server
 
 user1.key:
-	openssl genrsa -out user1.key 4096
+	openssl genrsa -out $@ 2048
 
-user1.csr: user1.key
-	openssl req -new -key user1.key -out user1.csr -sha256 -config user1.cnf
+user1.csr: user1.key user1.cnf
+	openssl req -new -key user1.key -out $@ -sha256 -config user1.cnf
 
-user1.pem: user1.csr ca.pem ca-key.pem
-	openssl x509 -req -days 3650 -in user1.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out user1.pem -sha256 -extfile user1.cnf -extensions v3_req
+user1.pem: user1.csr ca.pem ca-key.pem user1.cnf
+	openssl x509 -req -days 3650 -in user1.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out $@ -sha256 -extfile user1.cnf -extensions v3_req
 
 user1.p12: user1.key user1.pem
-	openssl pkcs12 -export -out user1.p12 -inkey user1.key -in user1.pem -passout pass:password1234
+	openssl pkcs12 -export -out $@ -inkey user1.key -in user1.pem -passout pass:password1234
 
 .PHONY: clean
 clean:
