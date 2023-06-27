@@ -4,9 +4,30 @@ This project demonstrates a Go web application that requires clients to present
 a certificate in order to access it. The client certificate must be signed by a
 predefined certificate authority (CA).
 
+## ⚠️ OpenSSL version
+
+Ensure you have OpenSSL v3.1+.
+
+```sh
+openssl version
+```
+
+```plain
+OpenSSL 3.1.1 30 May 2023 (Library: OpenSSL 3.1.1 30 May 2023)
+```
+
+macOS ships with LibreSSL, which doesn't support some of the arguments presented
+in this project. On macOS, you may want to install OpenSSL with Hombrew.
+
+```sh
+brew install openssl
+```
+
 ## Usage
 
 Create the certificate authority, server certificate and client certificate.
+
+> **OpenSSL Version**: Ensure you have OpenSSL 
 
 ```sh
 pushd tls

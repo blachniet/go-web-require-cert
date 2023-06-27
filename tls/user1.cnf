@@ -5,7 +5,9 @@ req_extensions         = v3_req
 
 
 [ req_distinguished_name ]
-commonName             = user1
+0.DC                   = com
+1.DC                   = example
+UID                    = user1
 
 [ v3_req ]
 basicConstraints       = CA:false
