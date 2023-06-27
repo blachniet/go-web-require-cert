@@ -12,6 +12,8 @@ Ensure you have OpenSSL v3.1+.
 openssl version
 ```
 
+That command should output something similar to this.
+
 ```plain
 OpenSSL 3.1.1 30 May 2023 (Library: OpenSSL 3.1.1 30 May 2023)
 ```
@@ -26,8 +28,6 @@ brew install openssl
 ## Usage
 
 Create the certificate authority, server certificate and client certificate.
-
-> **OpenSSL Version**: Ensure you have OpenSSL 
 
 ```sh
 pushd tls
